@@ -1,0 +1,16 @@
+version: "2"
+
+services:
+  dev:
+    build:
+     context: .
+     dockerfile: support/dev/Dockerfile
+    working_dir: /work
+    command: ./run-dev
+    volumes:
+      - .:/work
+      - stack-global:/root/.stack
+
+volumes:
+  stack-global:
+    external: true
