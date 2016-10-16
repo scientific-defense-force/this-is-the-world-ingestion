@@ -2,4 +2,4 @@
 
 cd $(dirname $0)/..
 
-auto/dev-environment stack build "$@"
+auto/dev-environment sbt assembly "$@"

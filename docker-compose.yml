@@ -9,8 +9,11 @@ services:
     command: ./run-dev
     volumes:
       - .:/work
-      - stack-global:/root/.stack
+      - ivy-cache:/root/.ivy2/cache
+      - docker-scala-sbt-cache:/root/.sbt
 
 volumes:
-  stack-global:
+  ivy-cache:
+    external: true
+  docker-scala-sbt-cache:
     external: true
