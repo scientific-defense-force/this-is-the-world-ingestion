@@ -1,9 +1,9 @@
-from openjdk:8u102-jdk
+FROM openjdk:8u102-jdk
 
 RUN  apt-get update \
   && apt-get install apt-transport-https
 
-ENV SCALA_VERSION 2.11.8
+ENV SCALA_VERSION 2.12.0
 
 RUN FILE="scala-$SCALA_VERSION.deb"; \
     wget "https://downloads.lightbend.com/scala/$SCALA_VERSION/$FILE" -qO $FILE \
