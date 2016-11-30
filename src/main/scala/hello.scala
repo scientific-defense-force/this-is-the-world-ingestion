@@ -4,7 +4,7 @@ object Entry {
 
 
     val fileAsStream = RetrieveFileAsStream.get()
-//    val fileAsInputStream = StringToInputStream.convert(fileAsString)
+    val ooh = LoadIntoPdfBox.load(fileAsStream)
 
 
     println("Hi!")

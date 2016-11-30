@@ -5,8 +5,10 @@ lazy val root = (project in file(".")).
     scalaVersion := "2.12.0"
   )
 
-libraryDependencies += "org.apache.poi" % "poi" % "latest.release"
-libraryDependencies += "org.apache.poi" % "poi-ooxml" % "latest.release"
+libraryDependencies += "org.apache.pdfbox" % "pdfbox" % "latest.release"
+
+//libraryDependencies += "org.apache.poi" % "poi" % "latest.release"
+//libraryDependencies += "org.apache.poi" % "poi-ooxml" % "latest.release"
 //libraryDependencies += "co.fs2" %% "fs2-core" % "0.9.1"
 //libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.2.6"
 
