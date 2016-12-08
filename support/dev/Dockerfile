@@ -5,7 +5,7 @@ RUN  apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/*
 
-ENV SCALA_VERSION 2.12.0
+ENV SCALA_VERSION 2.12.1
 
 RUN FILE="scala-$SCALA_VERSION.deb"; \
     wget "https://downloads.lightbend.com/scala/$SCALA_VERSION/$FILE" -qO $FILE \

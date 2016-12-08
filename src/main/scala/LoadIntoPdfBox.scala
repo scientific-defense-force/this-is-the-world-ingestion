@@ -7,10 +7,11 @@ object LoadIntoPdfBox {
   def load(inputStream: InputStream) : PDDocument = {
 
     val doc = PDDocument.load(inputStream)
-
-    val stripper = new PDFTextStripper()
-
-//    val page = doc.getPage(23)
+//
+//    val stripper = new PDFTextStripper()
+//
+//    stripper.setStartPage(111)
+//    stripper.setEndPage(115)
 //
 //    print(stripper.getText(doc))
 
