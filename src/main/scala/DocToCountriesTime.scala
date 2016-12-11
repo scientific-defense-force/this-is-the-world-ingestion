@@ -17,7 +17,11 @@ object DocToCountryDetails {
 
     val dataLines = getTableLines(text)
 
-    print(dataLines.head)
+//    val countryDetails = dataLines.map(lineToCountryDetail)
+
+    val countryDetail = lineToCountryDetail(dataLines.head)
+
+    print(countryDetail)
 
 //    new Vector[CountryDetail](new CountryDetail())
     null
@@ -47,6 +51,17 @@ object DocToCountryDetails {
         | \w+([0-9.]+)\w
       """, "country", "region", "incomeGroup", "gdpPerAdult2016", "wealthPerAdult2000", "weatlhPerAdult2016", "totalWeatlh", "shareOfWorldWealth2016")
 
+    val result = regex.findAllIn(line)
 
+    new CountryDetail(
+      name = result.group("country"),
+      region = result.group("region"),
+      incomeGroup = result.group("incomeGroup"),
+      gdpPerAdult2016 = result.group("gdpPerAdult2016").filter((char) => char != ',').toInt,
+      wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
+      weatlhPerAdult2016 = result.group("weatlhPerAdult2016").filter((char) => char != ',').toInt,
+      totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toInt,
+      shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
+    )
   }
 }

@@ -10,7 +10,7 @@ case class CountryDetail(name: String,
                           wealthPerAdult2000: Int,
                           weatlhPerAdult2016: Int,
                           totalWeatlh: Int,
-                          shareOfWorldWealth2016: Int)
+                          shareOfWorldWealth2016: Double)
 
 //case class Statistic(id: Short, name: String)
 //case class CountryStatistic(country: Country, statistic: Statistic, value: Double)
