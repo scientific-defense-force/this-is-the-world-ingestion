@@ -21,7 +21,7 @@ object DocToCountryDetails {
 
     val countryDetail = lineToCountryDetail(dataLines.head)
 
-    print(countryDetail)
+//    print(countryDetail)
 
 //    new Vector[CountryDetail](new CountryDetail())
     null
@@ -43,29 +43,37 @@ object DocToCountryDetails {
 //    val result = pattern.findFirstMatchIn("James Bond").get;
 //    println(result.group("lastName") + ", " + result.group("firstName"));
 
-    val the = """^([\w\s.-]+)
-                |\s(Africa|Asia-Pacific|Europe|North America|Latin America)
-                |\s(Low income|Lower middle income|Upper middle income|High income)
-                |\s+([0-9,]+)
-                |\s+([0-9,]+)
-                |\s+([0-9,]+)
-                |\s+([0-9,]+)
-                |\s+([0-9.]+)\s """.stripMargin.replaceAll("\n", "")
+//    val the = """^([\w\s.-]+)
+//                |\s(Africa|Asia-Pacific|Europe|North America|Latin America)
+//                |\s(Low income|Lower middle income|Upper middle income|High income)
+//                |\s+([0-9,]+)
+//                |\s+([0-9,]+)
+//                |\s+([0-9,]+)
+//                |\s+([0-9,]+)
+//                |\s+([0-9.]+)\s """.stripMargin.replaceAll("\n", "")
 
-    print(the)
+    val the =
+      """^(.+?)(Africa|AsiaPacific|Europe|North America|Latin America)
+      """.stripMargin.replaceAll("\n", "")
+
+    println(the)
+//    print(line)
 
     val regex = new Regex(the,
         "country", "region", "incomeGroup", "gdpPerAdult2016", "wealthPerAdult2000", "weatlhPerAdult2016", "totalWeatlh", "shareOfWorldWealth2016")
 
-    val result = regex.findFirstMatchIn(line).get
+    val result = regex.findFirstMatchIn("Afghanistan Europe Low income  1,604   848   2,500   38  0.0 n.a.").get
+
+//    result.
 
 //    result.next()
 
 //    val ooh = result.next()
 
-    val omg = result.group("country")
+//    val omg = result.group(1)
 
-    print(omg)
+    println(result.group("country"))
+    println(result.group("region"))
 
     null
 
