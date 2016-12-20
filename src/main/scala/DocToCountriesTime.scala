@@ -17,14 +17,7 @@ object DocToCountryDetails {
 
     val dataLines = getTableLines(text)
 
-//    val countryDetails = dataLines.map(lineToCountryDetail)
-
-    val countryDetail = lineToCountryDetail(dataLines.head)
-
-//    print(countryDetail)
-
-//    new Vector[CountryDetail](new CountryDetail())
-    null
+    dataLines.map(lineToCountryDetail)
   }
 
   def getTableLines(text: String) : Vector[String] = {
@@ -39,53 +32,35 @@ object DocToCountryDetails {
   //Afghanistan Asia-Pacific Low income  1,604   848   2,500   38  0.0 n.a.
 
   def lineToCountryDetail(line: String) : CountryDetail = {
-//    val pattern = new Regex("""(\w*) (\w*)""", "firstName", "lastName");
-//    val result = pattern.findFirstMatchIn("James Bond").get;
-//    println(result.group("lastName") + ", " + result.group("firstName"));
+    val regex = """^([\w\s.-]+)
+                |\s(Africa|Asia-Pacific|Europe|North America|Latin America)
+                |\s(Low income|Lower middle income|Upper middle income|High income)
+                |\s+([0-9,]+)
+                |\s+([0-9,]+)
+                |\s+([0-9,]+)
+                |\s+([0-9,]+)
+                |\s+([0-9.]+)\s""".stripMargin.replaceAll("\n", "").trim.r
 
-//    val the = """^([\w\s.-]+)
-//                |\s(Africa|Asia-Pacific|Europe|North America|Latin America)
-//                |\s(Low income|Lower middle income|Upper middle income|High income)
-//                |\s+([0-9,]+)
-//                |\s+([0-9,]+)
-//                |\s+([0-9,]+)
-//                |\s+([0-9,]+)
-//                |\s+([0-9.]+)\s """.stripMargin.replaceAll("\n", "")
+    val result = regex.findFirstMatchIn(line).get
 
-    val the =
-      """^(.+?)(Africa|AsiaPacific|Europe|North America|Latin America)
-      """.stripMargin.replaceAll("\n", "")
+//    var ok
 
-    println(the)
-//    print(line)
+//    try {
+      ok = CountryDetail(
+        name = result.group("country"),
+        region = result.group("region"),
+        incomeGroup = result.group("incomeGroup"),
+        gdpPerAdult2016 = result.group("gdpPerAdult2016").filter((char) => char != ',').toInt,
+        wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
+        weatlhPerAdult2016 = result.group("weatlhPerAdult2016").filter((char) => char != ',').toInt,
+        totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toInt,
+        shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
+      )
+//    }
+//    catch {
+//      println(line)
+//    }
 
-    val regex = new Regex(the,
-        "country", "region", "incomeGroup", "gdpPerAdult2016", "wealthPerAdult2000", "weatlhPerAdult2016", "totalWeatlh", "shareOfWorldWealth2016")
-
-    val result = regex.findFirstMatchIn("Afghanistan Europe Low income  1,604   848   2,500   38  0.0 n.a.").get
-
-//    result.
-
-//    result.next()
-
-//    val ooh = result.next()
-
-//    val omg = result.group(1)
-
-    println(result.group("country"))
-    println(result.group("region"))
-
-    null
-
-//    CountryDetail(
-//      name = result.group("country"),
-//      region = result.group("region"),
-//      incomeGroup = result.group("incomeGroup"),
-//      gdpPerAdult2016 = result.group("gdpPerAdult2016").filter((char) => char != ',').toInt,
-//      wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
-//      weatlhPerAdult2016 = result.group("weatlhPerAdult2016").filter((char) => char != ',').toInt,
-//      totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toInt,
-//      shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
-//    )
+    ok
   }
 }
