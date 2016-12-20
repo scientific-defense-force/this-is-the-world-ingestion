@@ -41,12 +41,13 @@ object DocToCountryDetails {
                 |\s+([0-9,]+)
                 |\s+([0-9.]+)\s""".stripMargin.replaceAll("\n", "").trim.r
 
+    try {
     val result = regex.findFirstMatchIn(line).get
 
-//    var ok
+//    var ok : CountryDetail
 
-//    try {
-      ok = CountryDetail(
+
+      val ok = CountryDetail(
         name = result.group("country"),
         region = result.group("region"),
         incomeGroup = result.group("incomeGroup"),
@@ -56,11 +57,13 @@ object DocToCountryDetails {
         totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toInt,
         shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
       )
-//    }
-//    catch {
-//      println(line)
-//    }
+    }
+    catch
+    {
+      case unknown => println(line)
 
-    ok
+    }
+
+    null
   }
 }
