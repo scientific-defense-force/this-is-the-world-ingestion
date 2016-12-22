@@ -29,41 +29,50 @@ object DocToCountryDetails {
       .toVector
   }
 
-  //Afghanistan Asia-Pacific Low income  1,604   848   2,500   38  0.0 n.a.
-
   def lineToCountryDetail(line: String) : CountryDetail = {
-    val regex = """^([\w\s.-]+)
-                |\s(Africa|Asia-Pacific|Europe|North America|Latin America)
+    val regexString = """^(.+)
+                |\s(Africa|Asia-Pacific|Europe|North America|Latin America|China|India)
                 |\s(Low income|Lower middle income|Upper middle income|High income)
+                |\s+([0-9,]+)?
                 |\s+([0-9,]+)
                 |\s+([0-9,]+)
-                |\s+([0-9,]+)
-                |\s+([0-9,]+)
-                |\s+([0-9.]+)\s""".stripMargin.replaceAll("\n", "").trim.r
+                |[\s-]+([0-9,]+)?
+                |\s+([0-9.]+)\s""".stripMargin.replaceAll("\n", "").trim
 
-    try {
+    val regex = new Regex(regexString,
+      "country",
+      "region",
+      "incomeGroup",
+      "gdpPerAdult2016",
+      "wealthPerAdult2000",
+      "wealthPerAdult2016",
+      "totalWeatlh",
+      "shareOfWorldWealth2016"
+    )
+
     val result = regex.findFirstMatchIn(line).get
 
-//    var ok : CountryDetail
+    var gdpPerAdult2016 : Option[Int] = None
 
-
-      val ok = CountryDetail(
-        name = result.group("country"),
-        region = result.group("region"),
-        incomeGroup = result.group("incomeGroup"),
-        gdpPerAdult2016 = result.group("gdpPerAdult2016").filter((char) => char != ',').toInt,
-        wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
-        weatlhPerAdult2016 = result.group("weatlhPerAdult2016").filter((char) => char != ',').toInt,
-        totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toInt,
-        shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
-      )
-    }
-    catch
-    {
-      case unknown => println(line)
-
+    if (result.group("gdpPerAdult2016") != null) {
+      gdpPerAdult2016 = Some(result.group("gdpPerAdult2016").filter((char) => char != ',').toInt)
     }
 
-    null
+    var totalWeatlh : Option[Int] = None
+
+    if (result.group("totalWeatlh") != null) {
+      totalWeatlh = Some(result.group("totalWeatlh").filter((char) => char != ',').toInt)
+    }
+
+    CountryDetail(
+      name = result.group("country"),
+      region = result.group("region"),
+      incomeGroup = result.group("incomeGroup"),
+      gdpPerAdult2016 = gdpPerAdult2016,
+      wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
+      weatlhPerAdult2016 = result.group("wealthPerAdult2016").filter((char) => char != ',').toInt,
+      totalWeatlh = totalWeatlh,
+      shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
+    )
   }
 }
