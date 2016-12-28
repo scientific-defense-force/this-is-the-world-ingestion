@@ -1,7 +1,9 @@
 version: "2"
 
 services:
-  dev:
+  database:
+    image: mysql:5.7
+  app:
     build:
      context: .
      dockerfile: support/dev/Dockerfile
@@ -11,6 +13,7 @@ services:
       - .:/work
       - ivy-cache:/root/.ivy2/cache
       - docker-scala-sbt-cache:/root/.sbt
+    depends_on: database
 
 volumes:
   ivy-cache:
