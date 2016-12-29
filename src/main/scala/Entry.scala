@@ -4,16 +4,14 @@ object Entry {
 
 
     val fileAsStream = RetrieveFileAsStream.get()
-    val ooh = LoadIntoPdfBox.load(fileAsStream)
+    val doc = LoadIntoPdfBox.load(fileAsStream)
 
-    val omg = DocToCountryDetails.process(ooh)
+    val countryDetails = DocToCountryDetails.process(doc)
 
-//    val wut = CountryDetailsToSql
+    Db.transaction {
+      countryDetails.foreach(cd => Db.save(cd))
+    }
 
-    Db.save(omg.head)
-
-    println(omg.length)
-
-    println("Hi!")
+    println(s"Completed Processing $countryDetails.size entries")
   }
 }
