@@ -1,11 +1,9 @@
+import models.CountryDetail
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 
 import scala.util.matching.Regex
 
-/**
-  * Created by alistairburrowes on 2016/11/15.
-  */
 object DocToCountryDetails {
   def process(pdDocument: PDDocument) : Vector[CountryDetail] = {
     val stripper = new PDFTextStripper()

@@ -8,6 +8,10 @@ object Entry {
 
     val omg = DocToCountryDetails.process(ooh)
 
+//    val wut = CountryDetailsToSql
+
+    Db.save(omg.head)
+
     println(omg.length)
 
     println("Hi!")

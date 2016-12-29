@@ -3,7 +3,12 @@ version: "2"
 services:
   database:
     image: mysql:5.7
-  app:
+    environment:
+      MYSQL_DATABASE: the_world
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: the_world_user
+      MYSQL_PASSWORD: the_world_password
+  dev:
     build:
      context: .
      dockerfile: support/dev/Dockerfile
@@ -13,7 +18,12 @@ services:
       - .:/work
       - ivy-cache:/root/.ivy2/cache
       - docker-scala-sbt-cache:/root/.sbt
-    depends_on: database
+    environment:
+      DATABASE_NAME: the_world
+      DATABASE_USER: the_world_user
+      DATABASE_PASSWORD: the_world_password
+    depends_on:
+      - database
 
 volumes:
   ivy-cache:
