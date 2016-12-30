@@ -8,10 +8,10 @@ object Entry {
 
     val countryDetails = DocToCountryDetails.process(doc)
 
-    Db.transaction {
-      countryDetails.foreach(cd => Db.save(cd))
-    }
+    val countryDetailsString = CountryDetailToJson.convert(countryDetails)
 
-    println(s"Completed Processing $countryDetails.size entries")
+    WriteStringToFile.write(countryDetailsString, "countryDetails.json")
+
+    println(s"Completed Processing ${countryDetails.size} entries")
   }
 }

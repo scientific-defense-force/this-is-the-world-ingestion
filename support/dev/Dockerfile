@@ -3,11 +3,10 @@ FROM openjdk:8u111-jdk
 RUN  apt-get update \
   && apt-get install -y \
     apt-transport-https \
-    mysql-client \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/*
 
-ENV SCALA_VERSION 2.11.8
+ENV SCALA_VERSION 2.12.1
 
 RUN FILE="scala-$SCALA_VERSION.deb"; \
     wget "https://downloads.lightbend.com/scala/$SCALA_VERSION/$FILE" -qO $FILE \
