@@ -1,5 +1,10 @@
+import models.{AggregateDetails, CountryDetail}
+import io.circe.generic.auto._
+import io.circe.syntax._
 
 object Entry {
+
+
   def main(args: Array[String]) {
 
 
@@ -8,9 +13,13 @@ object Entry {
 
     val countryDetails = DocToCountryDetails.process(doc)
 
-    val countryDetailsString = CountryDetailToJson.convert(countryDetails)
+    val aggregateDetails = CountryDetailsToAggregateDetail.convert(countryDetails)
+
+    val countryDetailsString = countryDetails.asJson.spaces2
+    val aggregateDetailsString = aggregateDetails.asJson.spaces2
 
     WriteStringToFile.write(countryDetailsString, "countryDetails.json")
+    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails.json")
 
     println(s"Completed Processing ${countryDetails.size} entries")
   }

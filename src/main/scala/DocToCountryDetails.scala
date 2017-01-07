@@ -70,7 +70,15 @@ object DocToCountryDetails {
       wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
       weatlhPerAdult2016 = result.group("wealthPerAdult2016").filter((char) => char != ',').toInt,
       totalWeatlh = totalWeatlh,
-      shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
+      shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble,
+      isOecdCountry(result.group("country"))
     )
+  }
+
+  val oecdCountries = List("Australia", "Austria", "Belgium", "Canada", "Chile", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Israel", "Italy", "Japan", "Korea", "Luxembourg", "Mexico", "Netherlands", "New Zealand", "Norway", "Poland", "Portugal", "Slovak Republic", "Slovenia", "Spain", "Sweden", "Switzerland", "Turkey", "United Kingdom", "United States")
+
+  def isOecdCountry(countryName: String) : Boolean = {
+    oecdCountries.contains(countryName)
+
   }
 }
