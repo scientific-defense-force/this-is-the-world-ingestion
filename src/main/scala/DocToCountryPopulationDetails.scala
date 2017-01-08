@@ -9,7 +9,7 @@ object DocToCountryPopulationDetails {
     val stripper = new PDFTextStripper()
 
     stripper.setStartPage(22)
-    stripper.setEndPage(29)
+    stripper.setEndPage(25)
 
     val text = stripper.getText(pdDocument)
 
@@ -22,13 +22,13 @@ object DocToCountryPopulationDetails {
     text
       .split('\n')
       .filter((line) => {
-        line.matches("^\w+([\w\s]+)?[\d,]+\s[\d,]+\s[\d,]+\s[\d,]+\s[\d,]+\s[\d,]+\s[\d,]+\s[\d,]+\s[\d,]+")
+        line.matches("""^\w(.+)?[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s*""".stripMargin.replaceAll("\n", "").trim)
       })
       .toVector
   }
 
   def lineToCountryDetail(line: String) : CountryPopulationDetail = {
-    val regexString = "^(.+)\s\d.+([\d,])$"
+    val regexString = """^(.+)\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+([\d,]+)\s*""".stripMargin.replaceAll("\n", "").trim
 
     val regex = new Regex(regexString,
       "country",
@@ -38,15 +38,8 @@ object DocToCountryPopulationDetails {
     val result = regex.findFirstMatchIn(line).get
 
     CountryPopulationDetail(
-      name = result.group("country"),
-      population = result.group("2016-population").filter((char) => char != ',').toInt
+      name = result.group("country").trim,
+      population = result.group("2016-population").filter((char) => char != ',').toInt * 1000
     )
-  }
-
-  val oecdCountries = List("Australia", "Austria", "Belgium", "Canada", "Chile", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Israel", "Italy", "Japan", "Korea", "Luxembourg", "Mexico", "Netherlands", "New Zealand", "Norway", "Poland", "Portugal", "Slovak Republic", "Slovenia", "Spain", "Sweden", "Switzerland", "Turkey", "United Kingdom", "United States")
-
-  def isOecdCountry(countryName: String) : Boolean = {
-    oecdCountries.contains(countryName)
-
   }
 }

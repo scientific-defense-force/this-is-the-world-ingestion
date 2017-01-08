@@ -1,19 +1,35 @@
-import models.{AggregateDetails, CountryDetail}
+import models.{AggregateDetails, CountryDetail, CountryPopulationDetail}
+import util.CountryIsOecd
 
 object CountryDetailsToAggregateDetail {
-  def convert(countryDetails: Vector[CountryDetail]) : AggregateDetails = {
-    val oecdTotal = countryDetails
-                          .filter(_.isOecd)
+  def convert(countryDetails: Vector[CountryDetail], countryPopulationDetails: Vector[CountryPopulationDetail]) : AggregateDetails = {
+    val oecdWealthTotal = countryDetails
+                          .filter((cd) => CountryIsOecd.isIt(cd.name))
                           .map(_.totalWeatlh)
                           .flatten
                           .sum
 
-    val nonOecdTotal = countryDetails
-                        .filterNot(_.isOecd)
+    val nonOecdWealthTotal = countryDetails
+                        .filterNot((cd) => CountryIsOecd.isIt(cd.name))
                         .map(_.totalWeatlh)
                         .flatten
                         .sum
 
-    AggregateDetails(otherTotalWealth = nonOecdTotal, oecdTotalWealth = oecdTotal)
+    val oecdPopulationTotal = countryPopulationDetails
+      .filter((cd) => CountryIsOecd.isIt(cd.name))
+      .map(_.population)
+      .sum
+
+    val nonOecdPopulationTotal = countryPopulationDetails
+      .filterNot((cd) => CountryIsOecd.isIt(cd.name))
+      .map(_.population)
+      .sum
+
+    AggregateDetails(
+      otherTotalWealth = nonOecdWealthTotal,
+      oecdTotalWealth = oecdWealthTotal,
+      otherTotalPopulation = nonOecdPopulationTotal,
+      oecdTotalPopulation = oecdPopulationTotal
+    )
   }
 }
