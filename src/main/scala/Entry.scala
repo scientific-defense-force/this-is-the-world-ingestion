@@ -1,4 +1,3 @@
-import models.{AggregateDetails, CountryDetail}
 import io.circe.generic.auto._
 import io.circe.syntax._
 
@@ -12,6 +11,7 @@ object Entry {
     val doc = LoadIntoPdfBox.load(fileAsStream)
 
     val countryDetails = DocToCountryDetails.process(doc)
+    val countryPopulationDetails = DocToCountryPopulationDetails.process(doc)
 
     val aggregateDetails = CountryDetailsToAggregateDetail.convert(countryDetails)
 
