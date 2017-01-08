@@ -13,7 +13,7 @@ object Entry {
     val countryDetails = DocToCountryDetails.process(doc)
     val countryPopulationDetails = DocToCountryPopulationDetails.process(doc)
 
-    val aggregateDetails = CountryDetailsToAggregateDetail.convert(countryDetails)
+    val aggregateDetails = CountryDetailsToAggregateDetail.convert(countryDetails, countryPopulationDetails)
 
     val countryDetailsString = countryDetails.asJson.spaces2
     val aggregateDetailsString = aggregateDetails.asJson.spaces2
