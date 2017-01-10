@@ -39,7 +39,7 @@ object DocToCountryPopulationDetails {
 
     CountryPopulationDetail(
       name = result.group("country").trim,
-      population = result.group("2016-population").filter((char) => char != ',').toInt * 1000
+      population = result.group("2016-population").filter((char) => char != ',').toLong * 1000
     )
   }
 }
