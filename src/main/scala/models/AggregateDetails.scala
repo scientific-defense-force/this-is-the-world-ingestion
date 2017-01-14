@@ -1,6 +1,6 @@
 package models
 
 case class AggregateDetails(otherTotalWealth: Long,
-                            oecdTotalWealth: Long,
+                            wenaoTotalWealth: Long,
                             otherTotalPopulation: Long,
-                            oecdTotalPopulation: Long)
+                            wenaoTotalPopulation: Long)
