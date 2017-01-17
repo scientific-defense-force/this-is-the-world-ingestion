@@ -6,6 +6,12 @@ import scala.util.matching.Regex
 
 object DocToCountryPopulationDetails {
   def process(pdDocument: PDDocument) : Vector[CountryPopulationDetail] = {
+    getLines(pdDocument)
+      .filter(lineContainsDataMatch)
+      .map(lineToCountryDetail)
+  }
+
+  def getLines(pdDocument: PDDocument) : Vector[String] = {
     val stripper = new PDFTextStripper()
 
     stripper.setStartPage(22)
@@ -13,18 +19,11 @@ object DocToCountryPopulationDetails {
 
     val text = stripper.getText(pdDocument)
 
-    val dataLines = getTableLines(text)
-
-    dataLines.map(lineToCountryDetail)
+    text.split('\n').toVector
   }
 
-  def getTableLines(text: String) : Vector[String] = {
-    text
-      .split('\n')
-      .filter((line) => {
-        line.matches("""^\w(.+)?[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s*""".stripMargin.replaceAll("\n", "").trim)
-      })
-      .toVector
+  def lineContainsDataMatch(line: String) : Boolean = {
+    line.matches("""^\w(.+)?[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s+[\d,]+\s*""".stripMargin.replaceAll("\n", "").trim)
   }
 
   def lineToCountryDetail(line: String) : CountryPopulationDetail = {

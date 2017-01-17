@@ -6,13 +6,11 @@ object CountryDetailsToAggregateDetail {
     val wenaoWealthTotal = countryDetails
                           .filter((cd) => CountryIsWenao.isIt(cd.name))
                           .map(_.totalWeatlh)
-                          .flatten
                           .sum
 
     val nonOecdWealthTotal = countryDetails
                         .filterNot((cd) => CountryIsWenao.isIt(cd.name))
                         .map(_.totalWeatlh)
-                        .flatten
                         .sum
 
     val wenaoPopulationTotal = countryPopulationDetails

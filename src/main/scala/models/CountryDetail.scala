@@ -6,6 +6,6 @@ case class CountryDetail(name: String,
                          gdpPerAdult2016: Option[Int],
                          wealthPerAdult2000: Int,
                          weatlhPerAdult2016: Int,
-                         totalWeatlh: Option[Long],
+                         totalWeatlh: Long,
                          shareOfWorldWealth2016: Double
                         )

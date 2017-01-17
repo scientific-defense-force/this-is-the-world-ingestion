@@ -6,6 +6,13 @@ import scala.util.matching.Regex
 
 object DocToCountryDetails {
   def process(pdDocument: PDDocument) : Vector[CountryDetail] = {
+
+    getLines(pdDocument)
+      .filter(lineContainsDataMatch)
+      .map(lineToCountryDetail)
+  }
+
+  def getLines(pdDocument: PDDocument) : Vector[String] = {
     val stripper = new PDFTextStripper()
 
     stripper.setStartPage(18)
@@ -13,18 +20,14 @@ object DocToCountryDetails {
 
     val text = stripper.getText(pdDocument)
 
-    val dataLines = getTableLines(text)
-
-    dataLines.map(lineToCountryDetail)
-  }
-
-  def getTableLines(text: String) : Vector[String] = {
     text
       .split('\n')
-      .filter((line) => {
-        line.matches(".*(Low income|Lower middle income|Upper middle income|High income).*")
-      })
+      .map(_.trim)
       .toVector
+  }
+
+  def lineContainsDataMatch(line: String) : Boolean = {
+    line.matches(".*(Low income|Lower middle income|Upper middle income|High income).*")
   }
 
   def lineToCountryDetail(line: String) : CountryDetail = {
@@ -34,7 +37,7 @@ object DocToCountryDetails {
                 |\s+([0-9,]+)?
                 |\s+([0-9,]+)
                 |\s+([0-9,]+)
-                |[\s-]+([0-9,]+)?
+                |\s+([0-9,-]+)
                 |\s+([0-9.]+)\s""".stripMargin.replaceAll("\n", "").trim
 
     val regex = new Regex(regexString,
@@ -56,10 +59,10 @@ object DocToCountryDetails {
       gdpPerAdult2016 = Some(result.group("gdpPerAdult2016").filter((char) => char != ',').toInt)
     }
 
-    var totalWeatlh : Option[Long] = None
+    var totalWeatlh : Long = 0
 
-    if (result.group("totalWeatlh") != null) {
-      totalWeatlh = Some(result.group("totalWeatlh").filter((char) => char != ',').toLong * 1000000000)
+    if (result.group("totalWeatlh") != null && result.group("totalWeatlh") != "-") {
+      totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toLong * 1000000000
     }
 
     CountryDetail(
