@@ -1,10 +1,12 @@
+package processors
+
 import models.CountryDetail
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 
 import scala.util.matching.Regex
 
-object DocToCountryDetails {
+object WealthBrackets {
   def process(pdDocument: PDDocument) : Vector[CountryDetail] = {
 
     getLines(pdDocument)
@@ -15,8 +17,8 @@ object DocToCountryDetails {
   def getLines(pdDocument: PDDocument) : Vector[String] = {
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(18)
-    stripper.setEndPage(21)
+    stripper.setStartPage(111)
+    stripper.setEndPage(114)
 
     val text = stripper.getText(pdDocument)
 
