@@ -2,7 +2,7 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 import models.{Country, CountryData}
 import org.apache.pdfbox.pdmodel.PDDocument
-import processors.{IsWenao, Population}
+import processors.{IsWenao, Population, WealthDetails}
 
 object Entry {
 
@@ -43,7 +43,8 @@ object Entry {
       name = country.name,
       region = country.region,
       isWenao = IsWenao.isIt(country.name),
-      population = Population.process(country, doc)
+      population = Population.process(country, doc),
+      wealthDetail = WealthDetails.process(country, doc)
     )
   }
 }

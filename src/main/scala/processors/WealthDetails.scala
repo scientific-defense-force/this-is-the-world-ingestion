@@ -1,17 +1,18 @@
 package processors
 
-import models.CountryDetail
+import models.{Country, CountryDetail, WealthDetail}
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 
 import scala.util.matching.Regex
 
 object WealthDetails {
-  def process(pdDocument: PDDocument) : Vector[CountryDetail] = {
+  def process(country: Country, pdDocument: PDDocument) : WealthDetail = {
 
     getLines(pdDocument)
-      .filter(lineContainsDataMatch)
-      .map(lineToCountryDetail)
+      .filter(line => countryMatch(line, country.name))
+      .map(getDetail)
+      .head
   }
 
   def getLines(pdDocument: PDDocument) : Vector[String] = {
@@ -25,16 +26,22 @@ object WealthDetails {
     text
       .split('\n')
       .map(_.trim)
+      .filterNot(_.isEmpty)
       .toVector
   }
 
-  def lineContainsDataMatch(line: String) : Boolean = {
-    line.matches(".*(Low income|Lower middle income|Upper middle income|High income).*")
+  private def countryMatch(line: String, name: String) : Boolean = {
+    val escapedCountry = name
+      .replaceAll("""\(""", """\\(""")
+      .replaceAll("""\)""", """\\)""")
+      .replaceAll("""\.""", """\\.""")
+
+    line.matches(s"^$escapedCountry\\s+(?:Africa|Asia-Pacific|Europe|North America|Latin America|China|India).*")
   }
 
-  def lineToCountryDetail(line: String) : CountryDetail = {
-    val regexString = """^(.+)
-                |\s(Africa|Asia-Pacific|Europe|North America|Latin America|China|India)
+  def getDetail(line: String) : WealthDetail = {
+    val regexString = """^.+
+                |\s(?:Africa|Asia-Pacific|Europe|North America|Latin America|China|India)
                 |\s(Low income|Lower middle income|Upper middle income|High income)
                 |\s+([0-9,]+)?
                 |\s+([0-9,]+)
@@ -43,8 +50,6 @@ object WealthDetails {
                 |\s+([0-9.]+)\s""".stripMargin.replaceAll("\n", "").trim
 
     val regex = new Regex(regexString,
-      "country",
-      "region",
       "incomeGroup",
       "gdpPerAdult2016",
       "wealthPerAdult2000",
@@ -67,9 +72,7 @@ object WealthDetails {
       totalWeatlh = result.group("totalWeatlh").filter((char) => char != ',').toLong * 1000000000
     }
 
-    CountryDetail(
-      name = result.group("country"),
-      region = result.group("region"),
+    WealthDetail(
       incomeGroup = result.group("incomeGroup"),
       gdpPerAdult2016 = gdpPerAdult2016,
       wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
