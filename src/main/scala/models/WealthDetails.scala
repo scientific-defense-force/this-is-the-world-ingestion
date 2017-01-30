@@ -1,8 +1,9 @@
 package models
 
-case class CountryDetail(name: String,
-                         region: String,
-                         incomeGroup: String,
+/**
+  * Created by alistairburrowes on 2017/01/30.
+  */
+case class WealthDetails(incomeGroup: String,
                          gdpPerAdult2016: Option[Int],
                          wealthPerAdult2000: Int,
                          weatlhPerAdult2016: Int,

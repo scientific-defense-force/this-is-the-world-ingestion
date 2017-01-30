@@ -6,7 +6,7 @@ import org.apache.pdfbox.text.PDFTextStripper
 
 import scala.util.matching.Regex
 
-object Population {
+object PopulationProcessor {
   def process(country: Country, pdDocument: PDDocument) : Long = {
     getLines(pdDocument)
       .filter(line => countryMatch(line, country.name))
