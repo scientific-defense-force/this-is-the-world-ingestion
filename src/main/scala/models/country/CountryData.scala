@@ -1,8 +1,7 @@
-package models
+package models.country
 
-/**
-  * Created by alistairburrowes on 2017/01/30.
-  */
+import models.WealthBracket
+
 case class CountryData(
   name: String,
   region: String,

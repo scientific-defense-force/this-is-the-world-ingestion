@@ -7,10 +7,10 @@ import org.apache.pdfbox.text.PDFTextStripper
 import scala.util.matching.Regex
 
 object WealthBracketsProcessor {
-  def process(country: Country, pdDocument: PDDocument) : Vector[WealthBracket] = {
+  def process(identifier: String, pdDocument: PDDocument) : Vector[WealthBracket] = {
 
     val matchedCountries = getLines(pdDocument)
-      .filter(line => countryMatch(line, country.name))
+      .filter(line => identifierMatch(line, identifier))
 
     if (matchedCountries.nonEmpty)
       matchedCountries.map(getDetail).head
@@ -33,13 +33,13 @@ object WealthBracketsProcessor {
       .toVector
   }
 
-  private def countryMatch(line: String, name: String) : Boolean = {
-    val escapedCountry = name
+  private def identifierMatch(line: String, name: String) : Boolean = {
+    val escapedIdentifier = name
       .replaceAll("""\(""", """\\(""")
       .replaceAll("""\)""", """\\)""")
       .replaceAll("""\.""", """\\.""")
 
-    line.matches(s"^$escapedCountry\\s+\\d+.*")
+    line.matches(s"^$escapedIdentifier\\s+\\d+.*")
   }
 
   def getDetail(line: String) : Vector[WealthBracket] = {

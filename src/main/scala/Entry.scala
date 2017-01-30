@@ -1,8 +1,8 @@
-import io.circe.generic.auto._
-import io.circe.syntax._
-import models.{Country, CountryData}
+import models.country.{Country, CountryData}
+import models.region.RegionData
 import org.apache.pdfbox.pdmodel.PDDocument
-import processors.{IsWenaoProcessor, PopulationProcessor, WealthBracketsProcessor, WealthDetailsProcessor}
+import processors.WealthBracketsProcessor
+import processors.country.{IsWenaoProcessor, PopulationProcessor, WealthDetailsProcessor}
 
 object Entry {
 
@@ -12,17 +12,11 @@ object Entry {
     val fileAsStream = RetrieveFileAsStream.get()
     val doc = LoadIntoPdfBox.load(fileAsStream)
 
-    val result = DocToCountries.process(doc)
+    val countriesResult = DocToCountries.process(doc)
         .map(c => createCountryData(c, doc))
 
-//    val ok = createCountryData(result.head, doc)
-
-    println(result)
-
-//    DocToCountries.process(doc)
-//        .map(c => Coun)
-
-
+    val regionsResult = Regions.get
+          .map(r => createRegionData(r, doc))
 
 //    val countryDetails = DocToCountryDetails.process(doc)
 //    val countryPopulationDetails = DocToCountryPopulationDetails.process(doc)
@@ -36,6 +30,8 @@ object Entry {
 //    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails.json")
 
 //    println(s"Completed Processing ${countryDetails.size} entries")
+
+    doc.close()
   }
 
   def createCountryData(country: Country, doc: PDDocument) : CountryData = {
@@ -45,7 +41,14 @@ object Entry {
       isWenao = IsWenaoProcessor.isIt(country.name),
       population = PopulationProcessor.process(country, doc),
       wealthDetails = WealthDetailsProcessor.process(country, doc),
-      wealthBracketDetails = WealthBracketsProcessor.process(country, doc)
+      wealthBracketDetails = WealthBracketsProcessor.process(country.name, doc)
+    )
+  }
+
+  def createRegionData(region: String, doc: PDDocument) : RegionData = {
+    RegionData(
+      region = region,
+      wealthBracketDetails = WealthBracketsProcessor.process(region, doc)
     )
   }
 }

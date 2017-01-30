@@ -1,6 +1,6 @@
-package processors
+package processors.country
 
-import models.{Country, WealthDetails}
+import models.country.{Country, WealthDetails}
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 
