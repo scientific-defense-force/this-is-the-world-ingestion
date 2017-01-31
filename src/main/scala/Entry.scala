@@ -1,8 +1,12 @@
+import aggregator.{OtherTotalPopulationAggregator, OtherTotalWealthAggregator, WenaoTotalPopulationAggregator, WenaoTotalWealthAggregator}
+import models.AggregateDetails
 import models.country.{Country, CountryData}
 import models.region.RegionData
 import org.apache.pdfbox.pdmodel.PDDocument
 import processors.WealthBracketsProcessor
 import processors.country.{IsWenaoProcessor, PopulationProcessor, WealthDetailsProcessor}
+import io.circe.generic.auto._
+import io.circe.syntax._
 
 object Entry {
 
@@ -18,18 +22,13 @@ object Entry {
     val regionsResult = Regions.get
           .map(r => createRegionData(r, doc))
 
-//    val countryDetails = DocToCountryDetails.process(doc)
-//    val countryPopulationDetails = DocToCountryPopulationDetails.process(doc)
-//
-//    val aggregateDetails = CountryDetailsToAggregateDetail.convert(countryDetails, countryPopulationDetails)
-//
-//    val countryDetailsString = countryDetails.asJson.spaces2
-//    val aggregateDetailsString = aggregateDetails.asJson.spaces2
-//
-//    WriteStringToFile.write(countryDetailsString, "countryDetails.json")
-//    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails.json")
+    val aggregateDetails = createAggregteDetail(countriesResult, regionsResult)
 
-//    println(s"Completed Processing ${countryDetails.size} entries")
+    val aggregateDetailsString = aggregateDetails.asJson.spaces2
+
+    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails.json")
+
+    println(s"Completed Processing ${countriesResult.size} entries")
 
     doc.close()
   }
@@ -49,6 +48,15 @@ object Entry {
     RegionData(
       region = region,
       wealthBracketDetails = WealthBracketsProcessor.process(region, doc)
+    )
+  }
+
+  def createAggregteDetail(countryData: Vector[CountryData], regionData: Vector[RegionData]) : AggregateDetails = {
+    AggregateDetails(
+      otherTotalWealth = OtherTotalWealthAggregator.process(countryData),
+      wenaoTotalWealth = WenaoTotalWealthAggregator.process(countryData),
+      otherTotalPopulation = OtherTotalPopulationAggregator.process(countryData),
+      wenaoTotalPopulation = WenaoTotalPopulationAggregator.process(countryData)
     )
   }
 }
