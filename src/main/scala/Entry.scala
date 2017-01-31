@@ -1,4 +1,4 @@
-import aggregator.{OtherTotalPopulationAggregator, OtherTotalWealthAggregator, WenaoTotalPopulationAggregator, WenaoTotalWealthAggregator}
+import aggregator._
 import models.AggregateDetails
 import models.country.{Country, CountryData}
 import models.region.RegionData
@@ -56,7 +56,9 @@ object Entry {
       otherTotalWealth = OtherTotalWealthAggregator.process(countryData),
       wenaoTotalWealth = WenaoTotalWealthAggregator.process(countryData),
       otherTotalPopulation = OtherTotalPopulationAggregator.process(countryData),
-      wenaoTotalPopulation = WenaoTotalPopulationAggregator.process(countryData)
+      wenaoTotalPopulation = WenaoTotalPopulationAggregator.process(countryData),
+      wenao1PercentWealth = Wenao1PercentWealthAggregator.process(countryData),
+      wenao99PercentWealth = Wenao99PercentWealthAggregator.process(countryData)
     )
   }
 }
