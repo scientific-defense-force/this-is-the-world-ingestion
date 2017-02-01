@@ -14,7 +14,13 @@ object PopulationProcessor {
       .head
   }
 
+  private var linesResult : Option[Vector[String]] = None
+
   private def getLines(pdDocument: PDDocument) : Vector[String] = {
+    if (linesResult.nonEmpty) {
+      return linesResult.get
+    }
+
     val stripper = new PDFTextStripper()
 
     stripper.setStartPage(22)
@@ -22,11 +28,13 @@ object PopulationProcessor {
 
     val text = stripper.getText(pdDocument)
 
-    text
-      .split("\\r?\\n")
-      .map(_.trim)
-      .filterNot(_.isEmpty)
-      .toVector
+    linesResult = Some(text
+                    .split("\\r?\\n")
+                    .map(_.trim)
+                    .filterNot(_.isEmpty)
+                    .toVector)
+
+    linesResult.get
   }
 
   private def countryMatch(line: String, name: String) : Boolean = {

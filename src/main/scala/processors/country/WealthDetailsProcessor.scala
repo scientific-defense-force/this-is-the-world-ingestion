@@ -15,7 +15,13 @@ object WealthDetailsProcessor {
       .head
   }
 
+  private var linesResult : Option[Vector[String]] = None
+
   def getLines(pdDocument: PDDocument) : Vector[String] = {
+    if (linesResult.nonEmpty) {
+      return linesResult.get
+    }
+
     val stripper = new PDFTextStripper()
 
     stripper.setStartPage(18)
@@ -23,11 +29,13 @@ object WealthDetailsProcessor {
 
     val text = stripper.getText(pdDocument)
 
-    text
-      .split('\n')
+    linesResult = Some(text
+      .split("\\r?\\n")
       .map(_.trim)
       .filterNot(_.isEmpty)
-      .toVector
+      .toVector)
+
+    linesResult.get
   }
 
   private def countryMatch(line: String, name: String) : Boolean = {

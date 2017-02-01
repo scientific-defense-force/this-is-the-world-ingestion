@@ -18,7 +18,13 @@ object WealthBracketsProcessor {
       Vector()
   }
 
+  private var linesResult : Option[Vector[String]] = None
+
   def getLines(pdDocument: PDDocument) : Vector[String] = {
+    if (linesResult.nonEmpty) {
+      return linesResult.get
+    }
+
     val stripper = new PDFTextStripper()
 
     stripper.setStartPage(111)
@@ -26,11 +32,13 @@ object WealthBracketsProcessor {
 
     val text = stripper.getText(pdDocument)
 
-    text
-      .split('\n')
+    linesResult = Some(text
+      .split("\\r?\\n")
       .map(_.trim)
       .filterNot(_.isEmpty)
-      .toVector
+      .toVector)
+
+    linesResult.get
   }
 
   private def identifierMatch(line: String, name: String) : Boolean = {
