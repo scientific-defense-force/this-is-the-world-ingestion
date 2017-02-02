@@ -5,19 +5,35 @@ import models.country.CountryData
 
 object Wenao99PercentWealthAggregator {
   def process(countryData: Vector[CountryData]) : Long = {
-    countryData
-      .filter(_.isWenao)
-      .map(countryToWealthBracketTotal)
+    val worldTotalWealth = countryData
+      .map(_.wealthDetails.totalWeatlh)
       .sum
-  }
 
-  def countryToWealthBracketTotal(countryData: CountryData) : Long = {
-    val totalWealth = countryData.wealthDetails.totalWeatlh
+    val ninetyNinePercentTotalWealth = worldTotalWealth * .492
 
-    val bracket = countryData.wealthBracketDetails
-                    .filter((wb) => wb.bracket == .01 && wb.bracketType == WealthBracketType.Top)
-                    .head
+    val onePercentBracketTotal = countryData
+      .filter(_.isWenao)
+      .flatMap(_.wealthBracketDetails)
+      .filter((wb) => wb.bracket == .01 && wb.bracketType == WealthBracketType.Top)
+      .map(_.value)
+      .sum
 
-    (totalWealth * (1 - bracket.value)).toLong
+    val allPercentBracketTotal = countryData
+      .filter(_.isWenao)
+      .flatMap(_.wealthBracketDetails)
+      .filter((wb) => wb.bracketType == WealthBracketType.Decile)
+      .map(_.value)
+      .sum
+
+    val nintyNinePercentBracketTotal = allPercentBracketTotal - onePercentBracketTotal
+
+    println("99 bracket total")
+    println(nintyNinePercentBracketTotal)
+    println("all percent")
+    println(allPercentBracketTotal)
+    println("one percent")
+    println(onePercentBracketTotal)
+
+    (ninetyNinePercentTotalWealth * (nintyNinePercentBracketTotal / 100)).toLong
   }
 }

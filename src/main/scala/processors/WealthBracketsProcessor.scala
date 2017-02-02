@@ -76,7 +76,7 @@ object WealthBracketsProcessor {
       "decile70",
       "decile80",
       "decile90",
-      "top10",
+      "decile100",
       "top5",
       "top1"
 
@@ -94,7 +94,7 @@ object WealthBracketsProcessor {
       WealthBracket(bracketType = WealthBracketType.Decile, bracket = .7, value = result.group("decile70").toDouble),
       WealthBracket(bracketType = WealthBracketType.Decile, bracket = .8, value = result.group("decile80").toDouble),
       WealthBracket(bracketType = WealthBracketType.Decile, bracket = .9, value = result.group("decile90").toDouble),
-      WealthBracket(bracketType = WealthBracketType.Top, bracket = .1, value = result.group("top10").toDouble),
+      WealthBracket(bracketType = WealthBracketType.Decile, bracket = 1, value = result.group("decile100").toDouble),
       WealthBracket(bracketType = WealthBracketType.Top, bracket = .05, value = result.group("top5").toDouble),
       WealthBracket(bracketType = WealthBracketType.Top, bracket = .01, value = result.group("top1").toDouble)
     )

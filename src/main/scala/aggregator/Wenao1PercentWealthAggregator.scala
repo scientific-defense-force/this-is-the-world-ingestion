@@ -5,19 +5,19 @@ import models.country.CountryData
 
 object Wenao1PercentWealthAggregator {
   def process(countryData: Vector[CountryData]) : Long = {
-    countryData
-      .filter(_.isWenao)
-      .map(countryToWealthBracketTotal)
-      .sum
-  }
+    val worldTotalWealth = countryData
+        .map(_.wealthDetails.totalWeatlh)
+        .sum
 
-  def countryToWealthBracketTotal(countryData: CountryData) : Long = {
-    val totalWealth = countryData.wealthDetails.totalWeatlh
+    val onePercentTotalWealth = worldTotalWealth * .508
 
-    val bracket = countryData.wealthBracketDetails
-                    .filter((wb) => wb.bracket == .01 && wb.bracketType == WealthBracketType.Top)
-                    .head
+    val bracketTotal = countryData
+        .filter(_.isWenao)
+        .flatMap(_.wealthBracketDetails)
+        .filter((wb) => wb.bracket == .01 && wb.bracketType == WealthBracketType.Top)
+        .map(_.value)
+        .sum
 
-    (totalWealth * bracket.value).toLong
+    (onePercentTotalWealth * (bracketTotal / 100)).toLong
   }
 }
