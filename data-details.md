@@ -96,7 +96,7 @@ Wealth composition is not relevant
 
 There are a bunch of graphs at the start of this, but they can't really be used because they don't contain the specific data.
 
-### :partly_sunny 6-1 Summary details for regions and selected countries
+### :partly_sunny: 6-1 Summary details for regions and selected countries
 
 All this data may be contained elsewhere, so it might not make sense to use this.
 
