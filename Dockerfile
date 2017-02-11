@@ -1,1 +1,1 @@
-FROM openjdk:8u111-jre
+FROM openjdk:8u121-jre
