@@ -9,31 +9,22 @@ object Wenao99PercentWealthAggregator {
       .map(_.wealthDetails.totalWeatlh)
       .sum
 
-    val ninetyNinePercentTotalWealth = worldTotalWealth * .492
+    val onePercentTotalWealth = worldTotalWealth * .508
 
-    val onePercentBracketTotal = countryData
+    val bracketTotal = countryData
       .filter(_.isWenao)
       .flatMap(_.wealthBracketDetails)
       .filter((wb) => wb.bracket == .01 && wb.bracketType == WealthBracketType.Top)
       .map(_.value)
       .sum
 
-    val allPercentBracketTotal = countryData
+    val wenaoOnePercentTotal = (onePercentTotalWealth * (bracketTotal / 100)).toLong
+
+    val wenaoCountryWealth = countryData
       .filter(_.isWenao)
-      .flatMap(_.wealthBracketDetails)
-      .filter((wb) => wb.bracketType == WealthBracketType.Decile)
-      .map(_.value)
+      .map(_.wealthDetails.totalWeatlh)
       .sum
 
-    val nintyNinePercentBracketTotal = allPercentBracketTotal - onePercentBracketTotal
-
-    println("99 bracket total")
-    println(nintyNinePercentBracketTotal)
-    println("all percent")
-    println(allPercentBracketTotal)
-    println("one percent")
-    println(onePercentBracketTotal)
-
-    (ninetyNinePercentTotalWealth * (nintyNinePercentBracketTotal / 100)).toLong
+    wenaoCountryWealth - wenaoOnePercentTotal
   }
 }
