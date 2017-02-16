@@ -59,8 +59,8 @@ object Entry {
       wenaoTotalPopulation = WenaoTotalPopulationAggregator.process(countryData),
       wenao1PercentWealth = Wenao1PercentWealthAggregator.process(countryData),
       wenao99PercentWealth = Wenao99PercentWealthAggregator.process(countryData),
-      other1PercentWealth = Other1PercentWealthAggregator.process(countryData),
-      other99PercentWealth = Other99PercentWealthAggregator.process(countryData)
+      other10PercentWealth = Other10PercentWealthAggregator.process(countryData),
+      other90PercentWealth = Other90PercentWealthAggregator.process(countryData)
     )
   }
 }
