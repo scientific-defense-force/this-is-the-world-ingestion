@@ -28,4 +28,4 @@ sbt run
 
 ## Info on the data available in the PDF
 
-[data-details.md](Data details)
+[data-details.md](data-details.md)
