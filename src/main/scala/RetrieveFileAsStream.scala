@@ -5,7 +5,7 @@ object RetrieveFileAsStream {
 
   def get() : InputStream = {
 
-//    val theStream = new URL("http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=C26E3824-E868-56E0-CCA04D4BB9B9ADD5").openStream()
+//    val theStream = new URL("http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=AD6F2B43-B17B-345E-E20A1A254A3E24A5").openStream()
 
     val theStream = new FileInputStream("global-wealth-databook-2016.pdf")
 
