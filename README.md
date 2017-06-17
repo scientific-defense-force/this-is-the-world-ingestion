@@ -8,7 +8,7 @@ This app is a tool to extract wealth data from the PDF 'databook' and transform 
 
 Recent docker and docker-compose
 
-You need to download http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=C26E3824-E868-56E0-CCA04D4BB9B9ADD5 and put the file in the root.
+You need to download http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=AD6F2B43-B17B-345E-E20A1A254A3E24A5 and put the file in the root.
 
 ## To run
 

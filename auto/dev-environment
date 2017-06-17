@@ -1,12 +1,11 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 
 cd $(dirname $0)/..
 
+mkdir -p dist
+
 # Clean up at the end
 trap "docker-compose down --volumes --remove-orphans" 0
-
-# Start clean
-docker-compose down --volumes --remove-orphans
 
 # Create volume
 docker volume create --name ivy-cache > /dev/null

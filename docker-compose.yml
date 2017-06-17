@@ -2,9 +2,7 @@ version: "2"
 
 services:
   dev:
-    build:
-     context: .
-     dockerfile: support/dev/Dockerfile
+    build: support/dev
     working_dir: /work
     command: ./run-dev
     volumes:

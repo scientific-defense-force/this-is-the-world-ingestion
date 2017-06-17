@@ -1,5 +1,6 @@
 target
 project/project
+project/build.properties
 .idea
 
 global-wealth-databook-2016.pdf
