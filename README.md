@@ -2,13 +2,13 @@
 
 The [Credit Suisse](https://www.credit-suisse.com) organisation publishes a [yearly global wealth report](https://www.credit-suisse.com/au/en/about-us/research/research-institute/global-wealth-report.html). It is the only comprehensive report that attempts to estimate wealth for all countries.
 
-This app is a tool to extract wealth data from the PDF 'databook' and transform it into the required data for the [thisistheworld.net](https://thisistheworld.net) - https://github.com/open-socialism/this-is-the-world.github.io
+This app is a tool to extract wealth data from the PDF 'databook' and transform it into the required data for the [thisistheworld.net](https://thisistheworld.net) - https://github.com/scientific-defense-force/this-is-the-world-ingestion
 
 ## Requires
 
 Recent docker and docker-compose
 
-You need to download http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=AD6F2B43-B17B-345E-E20A1A254A3E24A5 and put the file in the root.
+You will need internet access for first run to download the databook pdf.
 
 ## To run
 

@@ -6,6 +6,7 @@ lazy val root = (project in file(".")).
   )
 
 libraryDependencies += "org.apache.pdfbox" % "pdfbox" % "2.0.6"
+libraryDependencies += "commons-io" % "commons-io" % "2.5"
 
 val circeVersion = "0.8.0"
 
