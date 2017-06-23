@@ -17,8 +17,9 @@ object Entry {
     val doc = LoadIntoPdfBox.load(fileAsStream)
 
     val countriesResult = DocToCountries.process(doc)
-        .map(c => createCountryData(c, doc))
+          .map(c => createCountryData(c, doc))
 
+    //the region data isn't actually being used.. but could add more data and use it in the future?
     val regionsResult = Regions.get
           .map(r => createRegionData(r, doc))
 

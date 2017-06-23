@@ -15,6 +15,8 @@ object WealthBracketsProcessor {
     if (matchedCountries.nonEmpty)
       matchedCountries.map(getDetail).head
     else
+      //in some cases there is no wealth bracket data for a given country, not ideal but these are all
+      // non-wenao countries with very low wealth. Could look to use region totals to work around this?
       Vector()
   }
 
