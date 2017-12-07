@@ -9,7 +9,7 @@ import scala.util.matching.Regex
 object PopulationProcessor {
   def process(country: Country, pdDocument: PDDocument) : Long = {
     getLines(pdDocument)
-      .filter(line => countryMatch(line, country.name))
+      .filter(line => countryMatch(line, countryName(country)))
       .map(getDetail)
       .head
   }
@@ -23,8 +23,8 @@ object PopulationProcessor {
 
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(22)
-    stripper.setEndPage(25)
+    stripper.setStartPage(25)
+    stripper.setEndPage(28)
 
     val text = stripper.getText(pdDocument)
 
@@ -35,6 +35,13 @@ object PopulationProcessor {
                     .toVector)
 
     linesResult.get
+  }
+
+  private def countryName(country: Country): String = {
+    if (country.name == "St. Vincent and the Grenadines")
+      "Grenadines" //this is split of 2 lines with the second line with the data
+    else
+      country.name
   }
 
   private def countryMatch(line: String, name: String) : Boolean = {
@@ -50,11 +57,11 @@ object PopulationProcessor {
     val regexString = """([\d,]+)\s*$""".stripMargin.trim
 
     val regex = new Regex(regexString,
-      "2016-population"
+      "2017-population"
     )
 
     val result = regex.findFirstMatchIn(line).get
 
-    result.group("2016-population").filter((char) => char != ',').toLong * 1000
+    result.group("2017-population").filter((char) => char != ',').toLong * 1000
   }
 }

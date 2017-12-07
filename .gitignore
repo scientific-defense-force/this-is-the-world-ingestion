@@ -2,5 +2,5 @@ target
 project/project
 .idea
 
-global-wealth-databook-2016.pdf
+global-wealth-databook-*.pdf
 dist

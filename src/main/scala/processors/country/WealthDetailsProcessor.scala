@@ -24,8 +24,8 @@ object WealthDetailsProcessor {
 
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(18)
-    stripper.setEndPage(21)
+    stripper.setStartPage(21)
+    stripper.setEndPage(24)
 
     val text = stripper.getText(pdDocument)
 
@@ -59,19 +59,19 @@ object WealthDetailsProcessor {
 
     val regex = new Regex(regexString,
       "incomeGroup",
-      "gdpPerAdult2016",
+      "gdpPerAdult2017",
       "wealthPerAdult2000",
-      "wealthPerAdult2016",
+      "wealthPerAdult2017",
       "totalWeatlh",
-      "shareOfWorldWealth2016"
+      "shareOfWorldWealth2017"
     )
 
     val result = regex.findFirstMatchIn(line).get
 
-    var gdpPerAdult2016 : Option[Int] = None
+    var gdpPerAdult2017 : Option[Int] = None
 
-    if (result.group("gdpPerAdult2016") != null) {
-      gdpPerAdult2016 = Some(result.group("gdpPerAdult2016").filter((char) => char != ',').toInt)
+    if (result.group("gdpPerAdult2017") != null) {
+      gdpPerAdult2017 = Some(result.group("gdpPerAdult2017").filter((char) => char != ',').toInt)
     }
 
     var totalWeatlh : Long = 0
@@ -82,11 +82,11 @@ object WealthDetailsProcessor {
 
     WealthDetails(
       incomeGroup = result.group("incomeGroup"),
-      gdpPerAdult2016 = gdpPerAdult2016,
+      gdpPerAdult2017 = gdpPerAdult2017,
       wealthPerAdult2000 = result.group("wealthPerAdult2000").filter((char) => char != ',').toInt,
-      weatlhPerAdult2016 = result.group("wealthPerAdult2016").filter((char) => char != ',').toInt,
+      weatlhPerAdult2017 = result.group("wealthPerAdult2017").filter((char) => char != ',').toInt,
       totalWeatlh = totalWeatlh,
-      shareOfWorldWealth2016 = result.group("shareOfWorldWealth2016").filter((char) => char != ',').toDouble
+      shareOfWorldWealth2017 = result.group("shareOfWorldWealth2017").filter((char) => char != ',').toDouble
     )
   }
 }

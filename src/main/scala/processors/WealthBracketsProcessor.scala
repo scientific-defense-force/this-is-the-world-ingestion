@@ -29,8 +29,8 @@ object WealthBracketsProcessor {
 
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(111)
-    stripper.setEndPage(114)
+    stripper.setStartPage(118)
+    stripper.setEndPage(121)
 
     val text = stripper.getText(pdDocument)
 

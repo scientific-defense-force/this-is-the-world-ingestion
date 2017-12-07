@@ -6,14 +6,14 @@ object RetrieveFileAsStream {
 
   def get() : InputStream = {
 
-    if (!new File("global-wealth-databook-2016.pdf").exists()) {
-      val theStream = new URL("http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=AD6F2B43-B17B-345E-E20A1A254A3E24A5").openStream()
+    if (!new File("global-wealth-databook-2017.pdf").exists()) {
+      val theStream = new URL("http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=432759CA-0A73-57F6-04C67EF7EE506040").openStream()
 
-      val targetFile = new File("global-wealth-databook-2016.pdf")
+      val targetFile = new File("global-wealth-databook-2017.pdf")
 
       FileUtils.copyInputStreamToFile(theStream, targetFile)
     }
 
-    new FileInputStream("global-wealth-databook-2016.pdf")
+    new FileInputStream("global-wealth-databook-2017.pdf")
   }
 }

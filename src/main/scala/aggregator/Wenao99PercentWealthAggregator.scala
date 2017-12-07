@@ -12,7 +12,7 @@ object Wenao99PercentWealthAggregator {
       .map(_.wealthDetails.totalWeatlh)
       .sum
 
-    val onePercentTotalWealth = worldTotalWealth * .508
+    val onePercentTotalWealth = worldTotalWealth * .4916
 
     val bracketTotal = countryData
       .filter(_.isWenao)
