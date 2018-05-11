@@ -7,7 +7,7 @@ object Wenao99PercentWealthAggregator {
   // See Wenao1PercentWealthAggregator for details on this
   // It's far easier to calculate the 1% wealth then subtract that from total wealth to get the 99%
   // rather than attempt to build up then total of the 99% wealth brackets
-  def process(countryData: Vector[CountryData]) : Long = {
+  def process(countryData: Vector[CountryData]): Long = {
     val worldTotalWealth = countryData
       .map(_.wealthDetails.totalWeatlh)
       .sum

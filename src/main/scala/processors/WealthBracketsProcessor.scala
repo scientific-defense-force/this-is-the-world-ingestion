@@ -7,7 +7,7 @@ import org.apache.pdfbox.text.PDFTextStripper
 import scala.util.matching.Regex
 
 object WealthBracketsProcessor {
-  def process(identifier: String, pdDocument: PDDocument) : Vector[WealthBracket] = {
+  def process(identifier: String, pdDocument: PDDocument): Vector[WealthBracket] = {
 
     val matchedCountries = getLines(pdDocument)
       .filter(line => identifierMatch(line, identifier))
@@ -20,9 +20,9 @@ object WealthBracketsProcessor {
       Vector()
   }
 
-  private var linesResult : Option[Vector[String]] = None
+  private var linesResult: Option[Vector[String]] = None
 
-  def getLines(pdDocument: PDDocument) : Vector[String] = {
+  def getLines(pdDocument: PDDocument): Vector[String] = {
     if (linesResult.nonEmpty) {
       return linesResult.get
     }
@@ -43,7 +43,7 @@ object WealthBracketsProcessor {
     linesResult.get
   }
 
-  private def identifierMatch(line: String, name: String) : Boolean = {
+  private def identifierMatch(line: String, name: String): Boolean = {
     val escapedIdentifier = name
       .replaceAll("""\(""", """\\(""")
       .replaceAll("""\)""", """\\)""")
@@ -52,7 +52,7 @@ object WealthBracketsProcessor {
     line.matches(s"^$escapedIdentifier\\s+\\d+.*")
   }
 
-  def getDetail(line: String) : Vector[WealthBracket] = {
+  def getDetail(line: String): Vector[WealthBracket] = {
 
     val regexString = """^.+
                         |([\d.]+)\s+

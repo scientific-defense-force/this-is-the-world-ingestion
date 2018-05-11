@@ -4,7 +4,7 @@ import models.WealthBracketType
 import models.country.CountryData
 
 object Other90PercentWealthAggregator {
-  def process(countryData: Vector[CountryData]) : Long = {
+  def process(countryData: Vector[CountryData]): Long = {
     val worldTotalWealth = countryData
       .map(_.wealthDetails.totalWeatlh)
       .sum

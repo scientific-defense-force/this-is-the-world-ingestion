@@ -7,7 +7,7 @@ import org.apache.pdfbox.text.PDFTextStripper
 import scala.util.matching.Regex
 
 object WealthDetailsProcessor {
-  def process(country: Country, pdDocument: PDDocument) : WealthDetails = {
+  def process(country: Country, pdDocument: PDDocument): WealthDetails = {
 
     getLines(pdDocument)
       .filter(line => countryMatch(line, country.name))
@@ -17,7 +17,7 @@ object WealthDetailsProcessor {
 
   private var linesResult : Option[Vector[String]] = None
 
-  def getLines(pdDocument: PDDocument) : Vector[String] = {
+  def getLines(pdDocument: PDDocument): Vector[String] = {
     if (linesResult.nonEmpty) {
       return linesResult.get
     }
@@ -38,7 +38,7 @@ object WealthDetailsProcessor {
     linesResult.get
   }
 
-  private def countryMatch(line: String, name: String) : Boolean = {
+  private def countryMatch(line: String, name: String): Boolean = {
     val escapedCountry = name
       .replaceAll("""\(""", """\\(""")
       .replaceAll("""\)""", """\\)""")
@@ -47,7 +47,7 @@ object WealthDetailsProcessor {
     line.matches(s"^$escapedCountry\\s+(?:Africa|Asia-Pacific|Europe|North America|Latin America|China|India).*")
   }
 
-  def getDetail(line: String) : WealthDetails = {
+  def getDetail(line: String): WealthDetails = {
     val regexString = """^.+
                 |\s(?:Africa|Asia-Pacific|Europe|North America|Latin America|China|India)
                 |\s(Low income|Lower middle income|Upper middle income|High income)

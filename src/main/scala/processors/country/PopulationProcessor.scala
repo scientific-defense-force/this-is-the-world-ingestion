@@ -7,14 +7,14 @@ import org.apache.pdfbox.text.PDFTextStripper
 import scala.util.matching.Regex
 
 object PopulationProcessor {
-  def process(country: Country, pdDocument: PDDocument) : Long = {
+  def process(country: Country, pdDocument: PDDocument): Long = {
     getLines(pdDocument)
       .filter(line => countryMatch(line, countryName(country)))
       .map(getDetail)
       .head
   }
 
-  private var linesResult : Option[Vector[String]] = None
+  private var linesResult: Option[Vector[String]] = None
 
   private def getLines(pdDocument: PDDocument) : Vector[String] = {
     if (linesResult.nonEmpty) {
@@ -44,7 +44,7 @@ object PopulationProcessor {
       country.name
   }
 
-  private def countryMatch(line: String, name: String) : Boolean = {
+  private def countryMatch(line: String, name: String): Boolean = {
     val escapedCountry = name
       .replaceAll("""\(""", """\\(""")
       .replaceAll("""\)""", """\\)""")
@@ -53,7 +53,7 @@ object PopulationProcessor {
     line.matches(s"^$escapedCountry\\s+\\d+.*")
   }
 
-  private def getDetail(line: String) : Long = {
+  private def getDetail(line: String): Long = {
     val regexString = """([\d,]+)\s*$""".stripMargin.trim
 
     val regex = new Regex(regexString,

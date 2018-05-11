@@ -1,5 +1,5 @@
 object Regions {
-  def get : Vector[String] = {
+  def get: Vector[String] = {
 
     Vector(
       "Africa",
