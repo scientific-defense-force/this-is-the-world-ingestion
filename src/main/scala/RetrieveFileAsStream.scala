@@ -4,16 +4,19 @@ import org.apache.commons.io.FileUtils
 
 object RetrieveFileAsStream {
 
-  def get() : InputStream = {
+  private val publicationKey: String = "FB790DB0-C175-0E07-787A2B8639253D5A"
+  private val fileName: String = s"global-wealth-databook-2017-$publicationKey.pdf"
 
-    if (!new File("global-wealth-databook-2016.pdf").exists()) {
-      val theStream = new URL("http://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=AD6F2B43-B17B-345E-E20A1A254A3E24A5").openStream()
+  def get(): InputStream = {
 
-      val targetFile = new File("global-wealth-databook-2016.pdf")
+    if (!new File(fileName).exists()) {
+      val theStream = new URL(s"https://publications.credit-suisse.com/tasks/render/file/index.cfm?fileid=$publicationKey").openStream()
+
+      val targetFile = new File(fileName)
 
       FileUtils.copyInputStreamToFile(theStream, targetFile)
     }
 
-    new FileInputStream("global-wealth-databook-2016.pdf")
+    new FileInputStream(fileName)
   }
 }

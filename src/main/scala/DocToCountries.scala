@@ -5,18 +5,18 @@ import org.apache.pdfbox.text.PDFTextStripper
 import scala.util.matching.Regex
 
 object DocToCountries {
-  def process(pdDocument: PDDocument) : Vector[Country] = {
+  def process(pdDocument: PDDocument): Vector[Country] = {
 
     getLines(pdDocument)
       .filter(lineContainsDataMatch)
       .map(lineToCountry)
   }
 
-  private def getLines(pdDocument: PDDocument) : Vector[String] = {
+  private def getLines(pdDocument: PDDocument): Vector[String] = {
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(18)
-    stripper.setEndPage(21)
+    stripper.setStartPage(21)
+    stripper.setEndPage(24)
 
     val text = stripper.getText(pdDocument)
 
@@ -26,7 +26,7 @@ object DocToCountries {
       .toVector
   }
 
-  private def lineContainsDataMatch(line: String) : Boolean = {
+  private def lineContainsDataMatch(line: String): Boolean = {
     line.matches(".*(Low income|Lower middle income|Upper middle income|High income).*")
   }
 

@@ -15,4 +15,4 @@ docker volume create --name docker-scala-sbt-cache > /dev/null
 docker-compose build dev
 
 # Run dev script or use what is passed in as arguments
-docker-compose run --rm --service-ports dev "${@-./run-dev}"
+docker-compose run --rm --service-ports dev "$@"

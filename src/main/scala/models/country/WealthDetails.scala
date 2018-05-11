@@ -1,9 +1,9 @@
 package models.country
 
 case class WealthDetails(incomeGroup: String,
-                         gdpPerAdult2016: Option[Int],
+                         gdpPerAdult2017: Option[Int],
                          wealthPerAdult2000: Int,
-                         weatlhPerAdult2016: Int,
+                         weatlhPerAdult2017: Int,
                          totalWeatlh: Long,
-                         shareOfWorldWealth2016: Double
+                         shareOfWorldWealth2017: Double
                         )

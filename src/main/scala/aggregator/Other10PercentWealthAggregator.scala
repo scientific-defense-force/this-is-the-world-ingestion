@@ -4,17 +4,17 @@ import models.WealthBracketType
 import models.country.CountryData
 
 object Other10PercentWealthAggregator {
-  def process(countryData: Vector[CountryData]) : Long = {
+  def process(countryData: Vector[CountryData]): Long = {
     val worldTotalWealth = countryData
         .map(_.wealthDetails.totalWeatlh)
         .sum
 
-    val onePercentTotalWealth = worldTotalWealth * .891
+    val onePercentTotalWealth = worldTotalWealth * .8782
 
     val bracketTotal = countryData
         .filterNot(_.isWenao)
         .flatMap(_.wealthBracketDetails)
-        .filter((wb) => wb.bracket == 1 && wb.bracketType == WealthBracketType.Decile)
+        .filter(wb => wb.bracket == 1 && wb.bracketType == WealthBracketType.Decile)
         .map(_.value)
         .sum
 

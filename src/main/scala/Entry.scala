@@ -11,7 +11,7 @@ import io.circe.syntax._
 object Entry {
 
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
 
     val fileAsStream = RetrieveFileAsStream.get()
     val doc = LoadIntoPdfBox.load(fileAsStream)
@@ -27,14 +27,14 @@ object Entry {
 
     val aggregateDetailsString = aggregateDetails.asJson.spaces2
 
-    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails.json")
+    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails2017.json")
 
     println(s"Completed Processing ${countriesResult.size} entries")
 
     doc.close()
   }
 
-  def createCountryData(country: Country, doc: PDDocument) : CountryData = {
+  def createCountryData(country: Country, doc: PDDocument): CountryData = {
     CountryData(
       name = country.name,
       region = country.region,
@@ -45,14 +45,14 @@ object Entry {
     )
   }
 
-  def createRegionData(region: String, doc: PDDocument) : RegionData = {
+  def createRegionData(region: String, doc: PDDocument): RegionData = {
     RegionData(
       region = region,
       wealthBracketDetails = WealthBracketsProcessor.process(region, doc)
     )
   }
 
-  def createAggregteDetail(countryData: Vector[CountryData], regionData: Vector[RegionData]) : AggregateDetails = {
+  def createAggregteDetail(countryData: Vector[CountryData], regionData: Vector[RegionData]): AggregateDetails = {
     AggregateDetails(
       otherTotalWealth = OtherTotalWealthAggregator.process(countryData),
       wenaoTotalWealth = WenaoTotalWealthAggregator.process(countryData),
