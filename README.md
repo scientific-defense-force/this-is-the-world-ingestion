@@ -43,6 +43,10 @@ auto/dev-environment sbt
 run
 ```
 
+## Code Quality
+
+Written was I was very new to Scala and functional programming. Lots of cleanup possible. May look to do this in the future. Slightly unsure of the future of this site.
+
 ## Info on the data available in the PDF
 
 [data-details.md](data-details.md)
