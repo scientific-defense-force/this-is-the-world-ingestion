@@ -45,8 +45,21 @@ run
 
 ## Code Quality
 
-Written was I was very new to Scala and functional programming. Lots of cleanup possible. May look to do this in the future. Slightly unsure of the future of this site.
+Written when was I was very new to Scala and functional programming. Lots of cleanup possible. May look to do this in the future. Slightly unsure of the future of this site.
 
 ## Info on the data available in the PDF
 
 [data-details.md](data-details.md)
+
+## Updating to a new year
+
+This is the happy path for updating to a new year's databook. In some cases more work is required to update the regex used to match the data.
+
+1. Update [RetrieveFileAsStream](src/main/scala/RetrieveFileAsStream.scala) with the download location / filename of the new worlds data book.
+2. Update the pages `from` and `to` for [DocToCountries](src/main/scala/DocToCountries.scala).
+3. Test this step (commenting out later steps in [Entry](src/main/scala/Entry.scala)).
+3. Update the pages `from` and `to` for [PopulationProcessor](src/main/scala/processors/country/PopulationProcessor.scala).
+4. Update the pages `from` and `to` for [WealthDetailsProcessor](src/main/scala/processors/country/WealthDetailsProcessor.scala)
+5. Update the pages `from` and `to` for [WealthBracketsProcessor](src/main/scala/processors/WealthBracketsProcessor.scala)
+6. Test a full run.
+

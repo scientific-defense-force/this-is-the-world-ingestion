@@ -15,8 +15,8 @@ object DocToCountries {
   private def getLines(pdDocument: PDDocument): Vector[String] = {
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(21)
-    stripper.setEndPage(24)
+    stripper.setStartPage(19)
+    stripper.setEndPage(22)
 
     val text = stripper.getText(pdDocument)
 

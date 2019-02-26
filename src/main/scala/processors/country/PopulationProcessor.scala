@@ -23,8 +23,8 @@ object PopulationProcessor {
 
     val stripper = new PDFTextStripper()
 
-    stripper.setStartPage(25)
-    stripper.setEndPage(28)
+    stripper.setStartPage(23)
+    stripper.setEndPage(26)
 
     val text = stripper.getText(pdDocument)
 
@@ -57,11 +57,11 @@ object PopulationProcessor {
     val regexString = """([\d,]+)\s*$""".stripMargin.trim
 
     val regex = new Regex(regexString,
-      "2017-population"
+      "2018-population"
     )
 
     val result = regex.findFirstMatchIn(line).get
 
-    result.group("2017-population").filter((char) => char != ',').toLong * 1000
+    result.group("2018-population").filter((char) => char != ',').toLong * 1000
   }
 }
