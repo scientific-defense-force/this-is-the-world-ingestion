@@ -9,7 +9,7 @@ import scala.util.matching.Regex
 object PopulationProcessor {
   def process(country: Country, pdDocument: PDDocument): Long = {
     getLines(pdDocument)
-      .filter(line => countryMatch(line, countryName(country)))
+      .filter(line => countryMatch(line, country.name))
       .map(getDetail)
       .head
   }
@@ -35,13 +35,6 @@ object PopulationProcessor {
                     .toVector)
 
     linesResult.get
-  }
-
-  private def countryName(country: Country): String = {
-    if (country.name == "St. Vincent and the Grenadines")
-      "Grenadines" //this is split of 2 lines with the second line with the data
-    else
-      country.name
   }
 
   private def countryMatch(line: String, name: String): Boolean = {

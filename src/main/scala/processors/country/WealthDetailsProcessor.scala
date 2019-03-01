@@ -66,12 +66,7 @@ object WealthDetailsProcessor {
       "shareOfWorldWealth2018"
     )
 
-    println(line)
-
     val result = regex.findFirstMatchIn(line).get
-
-    println(result.group("gdpPerAdult2018"))
-    println(result.group("wealthPerAdult2000"))
 
     var gdpPerAdult2018 : Option[Int] = None
 
