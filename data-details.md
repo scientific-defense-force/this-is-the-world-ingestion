@@ -1,5 +1,7 @@
 # Data available in the global wealth databook
 
+Update: This is as of the 2016 databook. May be out of date.
+
 There is a lot of data in the databook, but it is not immediately obvious what the data means.
 
 :confused: This is data that the full meaning of is not clear.

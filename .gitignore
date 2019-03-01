@@ -3,4 +3,4 @@ project/project
 .idea
 
 global-wealth-databook-*.pdf
-dist
+dist/*.json

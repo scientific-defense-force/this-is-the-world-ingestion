@@ -27,7 +27,7 @@ object Entry {
 
     val aggregateDetailsString = aggregateDetails.asJson.spaces2
 
-    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails2017.json")
+    WriteStringToFile.write(aggregateDetailsString, "aggregateDetails2018.json")
 
     println(s"Completed Processing ${countriesResult.size} entries")
 

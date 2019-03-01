@@ -4,7 +4,7 @@ services:
   dev:
     build: support/dev
     working_dir: /work
-    command: ./run-dev
+    command: sbt run
     volumes:
       - .:/work
       - ivy-cache:/root/.ivy2/cache
